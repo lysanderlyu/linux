@@ -1,0 +1,40 @@
+!ifndef STK8321_INCLUDED
+!define STK8321_INCLUDED
+@startuml
+!include ../../../include/linux/device/driver.puml
+!include ../../../include/linux/i2c.puml
+!include ../../../include/linux/iio/iio.puml
+
+class stk8321_driver <<stk8321.puml>> {
+    __private member__
+    - struct **i2c_client *client**
+    - struct **i2c_client *second_client**
+    - struct **iio_mount_matrix orientation**
+    - struct **mutex lock**
+    - int **irq**
+    - int **samp_freq**
+
+    __private method__
+    - static int **stk8321_read_axis(struct i2c_client *client, u8 reg1, u8 reg2)**
+    - static int **stk8321_read_x(struct i2c_client *client)**
+    - static int **stk8321_read_y(struct i2c_client *client)**
+    - static int **stk8321_read_z(struct i2c_client *client)**
+    - static int **stk8321_set_range(struct i2c_client *client, enum rangesel range)**
+    - static int **stk8321_set_power_mode(struct i2c_client *client, enum powmode mode)**
+    - static int **stk8321_set_bandwidth(struct i2c_client *client, enum bandwidth bw)**
+    - static const struct iio_mount_matrix * **stk8321_accel_get_mount_matrix(const struct iio_dev *indio_dev, const struct iio_chan_spec *chan)**
+    - static int **stk8321_read_raw(struct iio_dev *indio_dev, struct iio_chan_spec const *chan,int *val, int *val2, long mask)**
+    - static int **stk8321_write_raw(struct iio_dev *indio_dev,struct iio_chan_spec const *chan,int val, int val2, long mask)**
+    - static int **stk8321_apply_orientation(struct iio_dev *indio_dev)**
+    - static irqreturn_t **stk8321_irq_handler(int irq, void *dev_id)**
+    - static int **stk8321_probe(struct i2c_client *client, const struct i2c_device_id *dummy_id)**
+    - static int **stk8321_remove(struct i2c_client *client)**
+    - static int **stk8321_suspend(struct device *dev)**
+    - static int **stk8321_resume(struct device *dev)**
+}
+stk8321_driver o-- i2c_client : aggregate i2c_client
+stk8321_driver --> iio_dev : use iio_dev
+stk8321_driver --|> i2c_driver : register stk8321_driver to i2c_driver via module_i2c_driver()
+
+@enduml
+!endif
