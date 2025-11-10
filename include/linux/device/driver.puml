@@ -1,0 +1,37 @@
+!ifndef DRIVER_INCLUDED
+!define DRIVER_INCLUDED
+@startuml
+!include ../../../include/linux/pm.puml
+!include ../../../include/linux/mod_devicetable.puml
+!include ../../../include/linux/device.puml
+
+class device_driver <<drvier.puml>> {
+    __private member__
+    - struct **driver_private** *p
+    __public member__
+    + const **char**		*name
+    + struct **bus_type**		*bus
+    + struct **module**		*owner
+    + const **char**		*mod_name	/* used for built-in modules */
+    + bool **suppress_bind_attrs**	/* disables bind/unbind via sysfs */
+    + enum **probe_type** probe_type
+    + const **struct of_device_id**	*of_match_table
+    + const **struct acpi_device_id**	*acpi_match_table
+    + const **struct attribute_group** **groups
+    + const **struct attribute_group** **dev_groups
+    + const **struct dev_pm_ops** *pm
+    __public method__
+    + int **(*probe)** (struct device *dev)
+    + void **(*sync_state)**(struct device *dev)
+    + int **(*remove)** (struct device *dev)
+    + void **(*shutdown)** (struct device *dev)
+    + int **(*suspend)** (struct device *dev, pm_message_t state)
+    + int **(*resume)** (struct device *dev)
+    + void **(*coredump)** (struct device *dev)
+}
+device_driver o-- dev_pm_ops
+device_driver o-- of_device_id
+device_driver ..> device 
+
+@enduml
+!endif

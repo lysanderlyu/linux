@@ -1,0 +1,19 @@
+!ifndef MOD_DEVICETABLE_INCLUDED
+!define MOD_DEVICETABLE_INCLUDED
+@startuml
+class of_device_id <<mod_devicetable.puml>> {
+    __public member__
+    char	name[32]
+    char	type[32]
+    char	compatible[128]
+    const void *data
+}
+
+class i2c_device_id <<mod_devicetable.puml>> {
+    __public member__
+    char name[I2C_NAME_SIZE]
+    kernel_ulong_t driver_data	: Data private to the driver
+}
+
+@enduml
+!endif

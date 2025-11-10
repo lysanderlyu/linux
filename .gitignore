@@ -11,6 +11,7 @@
 # Normal rules (sorted alphabetically)
 #
 .*
+*.png
 *.a
 *.asn1.[ch]
 *.bin
