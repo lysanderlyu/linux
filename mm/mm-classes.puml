@@ -1,0 +1,77 @@
+!ifndef MM_CLASSES_INCLUDED
+!define MM_CLASSES_INCLUDED
+@startuml
+!include ../defualt-style.puml
+
+class hardware::ldtr <<register>> {
+    uint32_t **ldt_address**
+}
+
+class hardware::gdtr <<register>> {
+    uint32_t **gdt_address**
+}
+
+class hardware::segment_descriptor <<uint64_t>> {
+    uint16_t **Limit**
+    uint24_t **Base**
+    uint4_t **Type**
+    uint1_t **System**
+    uint1_t **DPL**
+    uint1_t **Granularity**
+    uint4_t **Limit**
+    uint1_t **AVL** : ignore by linux
+    uint1_t **Present**
+    uint1_t **D/B**
+    uint8_t **Base**
+}
+
+class software::ldt<2^13-1> <<multi local_descriptor_table>> {
+    uint64_t[] **seg_descriptor**
+}
+software::ldt *-- hardware::segment_descriptor
+hardware::ldtr --> software::ldt : store its address
+
+class software::gdt<2^13-1> <<one global_descriptor_table>> {
+    uint64_t[] **seg_descriptor**
+}
+software::gdt *-- hardware::segment_descriptor
+hardware::gdtr --> software::gdt : store its address
+
+class hardware::cs_register <<register>>  {
+    uint2_t CPL : Current Privilege Level, 0 for highest(kernel), 2 for lowest(user)
+}
+
+class hardware::segment_register <<Programmable CPU register group>> {
+    uint32_t **cs** : **code segment** register
+    uint32_t **ss** : **stack segment** register
+    uint32_t **ds** : **data segment** register
+    uint32_t cs : general segment register
+    uint32_t cs : general segment register
+    uint32_t cs : general segment register
+}
+hardware::segment_register *-- hardware::cs_register
+
+class hardware::segment_selector <<uint16_t>> {
+    uint2_t **RPL** : Requestor Privilege Level
+    uint1_t **TI** : Table Indicator
+    uint13_t **Index** : the segment index
+}
+
+class software::logical_address <<program>> {
+    uint16_t **segment_selector** 
+    uint32_t **offset**
+} 
+software::logical_address *-- hardware::segment_selector
+software::logical_address -> software::linear_address : [SEGMENTATION UNIT]
+
+class software::linear_address <<virtual address>> {
+    uint32_t **vir_address**
+}
+software::linear_address -> hardware::physical_address : [PAGING UNIT]
+
+class hardware::physical_address <<mem_chip>> {
+    uint32_t ~ uint36_t **phy_address**
+}
+
+@enduml
+!endif

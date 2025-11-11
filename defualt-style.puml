@@ -1,0 +1,32 @@
+!ifndef DEFUALTSTYLE_INCLUDED
+!define DEFUALTSTYLE_INCLUDED
+@startuml
+
+' Global
+'hide circle
+skinparam BackgroundColor WhiteSmoke
+skinparam DefaultFontColor Black
+skinparam DefaultFontName "SP Pro Display"
+skinparam DefaultFontSize 12
+
+' Class
+skinparam ClassBorderColor DarkSlateGrey
+'skinparam ClassBackgroundColor DarkSlateGrey
+skinparam ClassFontStyle bold
+set separator ::
+
+' Arrow
+skinparam ArrowColor DarkSlateBlue
+skinparam ArrowFontColor Navy
+
+' Sequence
+skinparam EntityBorderColor DarkSlateGrey
+'skinparam ActorBorderColor Purple
+skinparam DatabaseBorderColor Red
+skinparam BoundaryBorderColor Black
+
+
+'skinparam classAttributeIconSize 0
+
+@enduml
+!endif

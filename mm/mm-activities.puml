@@ -1,0 +1,8 @@
+!ifndef MM_CLASSES_INCLUDED
+!define MM_CLASSES_INCLUDED
+@startuml
+!include ../defualt-style.puml
+
+
+@enduml
+!endif
