@@ -1,5 +1,5 @@
-!ifndef MM_CLASSES_INCLUDED
-!define MM_CLASSES_INCLUDED
+!ifndef MM_SEQUENCE_INCLUDED
+!define MM_SEQUENCE_INCLUDED
 @startuml
 !include ../defualt-style.puml
 

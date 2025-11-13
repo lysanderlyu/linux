@@ -1,5 +1,5 @@
-!ifndef MM_CLASSES_INCLUDED
-!define MM_CLASSES_INCLUDED
+!ifndef MM_ACTIVITY_INCLUDED
+!define MM_ACTIVITY_INCLUDED
 @startuml
 !include ../defualt-style.puml
 

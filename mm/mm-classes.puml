@@ -45,9 +45,9 @@ class hardware::segment_register <<Programmable CPU register group>> {
     uint32_t **cs** : **code segment** register
     uint32_t **ss** : **stack segment** register
     uint32_t **ds** : **data segment** register
-    uint32_t cs : general segment register
-    uint32_t cs : general segment register
-    uint32_t cs : general segment register
+    uint32_t gs : general segment register
+    uint32_t gs : general segment register
+    uint32_t gs : general segment register
 }
 hardware::segment_register *-- hardware::cs_register
 
@@ -72,6 +72,14 @@ software::linear_address -> hardware::physical_address : [PAGING UNIT]
 class hardware::physical_address <<mem_chip>> {
     uint32_t ~ uint36_t **phy_address**
 }
+
+class linux::UserModeProcess {
+}
+linux::UserModeProcess ..> hardware::segment_register : use cs and ds
+
+class linux::KernelModeProcess{
+}
+linux::KernelModeProcess ..> hardware::segment_register : use cs and ds
 
 @enduml
 !endif
